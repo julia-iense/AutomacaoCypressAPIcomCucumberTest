@@ -1,6 +1,6 @@
-import BuscarUsuariosCadastradosIdRequests from "./BuscarUsuariosID";
-import CadastrarUsuariosRequests from "./CadastrarUsuario";
-import ListarUsuariosCadastradosRequests from "./ListarUsuariosCadastrados";
+import BuscarUsuariosCadastradosIdRequests from "./GETBuscarUsuarios";
+import CadastrarUsuariosRequests from "./POSTCadastrarUsuarios";
+import ListarUsuariosCadastradosRequests from "./GETListarUsuariosCadastrados";
 
 const CadastroUsuariosRequests = {
     ...BuscarUsuariosCadastradosIdRequests,
