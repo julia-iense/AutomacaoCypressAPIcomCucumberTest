@@ -1,10 +1,14 @@
-import BuscarUsuariosCadastradosIdRequests from "./GETBuscarUsuarios";
-import CadastrarUsuariosRequests from "./POSTCadastrarUsuarios";
+import BuscarUsuarioIdRequests from "./GETBuscarUsuariosID";
+import CadastrarUsuariosRequests from "./POSTCadastrarUsuario";
 import ListarUsuariosCadastradosRequests from "./GETListarUsuariosCadastrados";
+import DeleteCadastroUsuarioRequests from "./DELETECadastrarUsuario";
+import EditarUsuarioRequests from "./PUTeditarUsuario";
 
 const CadastroUsuariosRequests = {
-    ...BuscarUsuariosCadastradosIdRequests,
+    ...BuscarUsuarioIdRequests,
     ...CadastrarUsuariosRequests,
-    ...ListarUsuariosCadastradosRequests
+    ...ListarUsuariosCadastradosRequests,
+    ...DeleteCadastroUsuarioRequests,
+    ...EditarUsuarioRequests
 }
 export default {CadastroUsuariosRequests};

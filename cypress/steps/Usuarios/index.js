@@ -33,6 +33,10 @@ When("eu envio uma requisição POST para o cadastro de usuários",() =>{
 
         cy.log(CadastrarUsuariosResponse)
 
+        const IDusuario = CadastrarUsuariosResponse.body._id
+        Cypress.env('IDusuario',IDusuario);
+        cy.log (IDusuario)
+
         const responseStatus = CadastrarUsuariosResponse
         cy.log(responseStatus)
 
@@ -54,8 +58,54 @@ When("eu enviar a requisição GET para filtrar por dados do usuário",() =>{
 
     })  
 })
+When("o usuário seja deletado",() =>{
+    
+    CadastroUsuariosRequests.DeleteCadastroUsuario().then((DeleteCadastroUsuarioResponse) => {
 
+        cy.log(DeleteCadastroUsuarioResponse)
 
+        const responseStatus = DeleteCadastroUsuarioResponse
+        cy.log(responseStatus)
+
+        cy.wrap(responseStatus).as('responseStatus')
+
+    })  
+})
+
+When("pesquise o usuário pelo seu ID de cadastro",() =>{
+    
+    CadastroUsuariosRequests.BuscarUsuarioId().then((ListarUsuariosCadastradosResponse) => {
+
+        cy.log(ListarUsuariosCadastradosResponse)
+
+        const responseStatus = ListarUsuariosCadastradosResponse
+        cy.log(responseStatus)
+
+        cy.wrap(responseStatus).as('responseStatus')
+
+    })  
+})
+
+When("seja feita a alteração do usuário",() =>{
+    
+        cy.fixture('CadastroUsuarios.json').then((dados) => {
+        EditarUsuarioPayload = { ...dados }; 
+        EditarUsuarioPayload.administrador = false; 
+
+        cy.log(CadastrarUsuariosPayload);
+    })
+
+    CadastroUsuariosRequests.EditarUsuarioRequests(EditarUsuarioPayload).then((EditarUsuarioResponse) => {
+
+        cy.log(EditarUsuarioResponse)
+
+        const responseStatus = EditarUsuarioResponse
+        cy.log(responseStatus)
+
+        cy.wrap(responseStatus).as('responseStatus')
+
+    })  
+})
 
 Then("o status será {string} e a mensagem reportada será {string}",(Status,Mensagem) =>{
 
