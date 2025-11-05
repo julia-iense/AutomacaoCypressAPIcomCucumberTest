@@ -39,3 +39,9 @@ npm cypress open
 
 Request/Login - pasta destinada a autenticação do projeto.
 Request/Requests - Rotas de chamada da API.
+
+## Relatório de execução 
+
+O relatório de execução pode ser visualizado na wiki deste repositório. 
+
+https://github.com/julia-iense/AutomacaoCypressAPIcomCucumberTest/wiki/Relat%C3%B3rio-de-execu%C3%A7%C3%A3o-desta-automa%C3%A7%C3%A3o-de-testes
