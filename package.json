@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sync:testcases": "node sync-testcases.js"
+    "clean:reports": "rimraf cypress/reports",
+    "test": "cypress run",
+    "report:merge": "mochawesome-merge \"cypress/reports/raw/*.json\" -o \"cypress/reports/merged.json\"",
+    "report:generate": "marge \"cypress/reports/merged.json\" -f index -o \"cypress/reports/html\"",
+    "report": "npm run report:merge && npm run report:generate",
+    "test:report": "npm run clean:reports && npm run test && npm run report && start \"\" cypress/reports/index.html"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +16,14 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^21.0.3",
     "@cucumber/cucumber": "^11.1.0",
-    "cypress": "^13.16.1",
+    "cypress": "^13.17.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
-    "pg": "^8.13.1"
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.3.2",
+    "pg": "^8.13.1",
+    "rimraf": "^6.1.0"
   },
   "cypress-cucumber-preprocessor": {
     "step_definitions": "cypress/steps"

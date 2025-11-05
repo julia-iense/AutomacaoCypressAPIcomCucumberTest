@@ -14,16 +14,19 @@ Antes de começar, você precisa ter os seguintes programas instalados:
 Node.js 
 npm  (ou Yarn , se preferir)
 
-Instalação das dependencias
+### Instalação das dependencias
 Após realizar o clone do projeto, é necessário instalar as seguintes dependencias:
 
-npm install
-npm init -y
-npm install cypress
-npm install --save-dev @cucumber/cucumber
+- npm install
+- npm init -y
+- npm install cypress
+- npm install --save-dev @cucumber/cucumber
+- npm i -D cypress-mochawesome-reporter
+
 
 Comando utilizado para rodar o projeto
-npm cypress open
+npm cypress open 
+npm cypress run  
 
 ## Estrutura de Pastas do projeto
 
@@ -41,7 +44,8 @@ Request/Login - pasta destinada a autenticação do projeto.
 Request/Requests - Rotas de chamada da API.
 
 ## Relatório de execução 
+Este projeto utiliza o reports, ao rodar o projeto com o comando "npm cypress run" será gerado um arquivo HTML com o relatorio de toda a execução. Na Wiki do repositorio dessa aplicação, adicionei um relatorio com os pontos que eu considero mais relevantes. 
 
-O relatório de execução pode ser visualizado na wiki deste repositório. 
+Wiki deste repositório. 
 
 https://github.com/julia-iense/AutomacaoCypressAPIcomCucumberTest/wiki/Relat%C3%B3rio-de-execu%C3%A7%C3%A3o-desta-automa%C3%A7%C3%A3o-de-testes

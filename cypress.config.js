@@ -1,23 +1,29 @@
-const { defineConfig } = require('cypress');
-const cucumber = require('cypress-cucumber-preprocessor').default;
+// cypress.config.js
+const { defineConfig } = require("cypress");
+const cucumber = require("cypress-cucumber-preprocessor").default;
 
 module.exports = defineConfig({
+  reporter: "cypress-mochawesome-reporter",
+  reporterOptions: {
+    charts: true,
+    reportPageTitle: "Relatório de Testes",
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    saveAllAttempts: false,
+  },
+
+  // suas configs usuais
   modifyObstructiveCode: true,
-  projectId: 'test-master',
   viewportWidth: 1300,
   viewportHeight: 720,
-  chromeWebSecurity: false,
-  watchForFileChanges: false,
   defaultCommandTimeout: 20000,
-  requestTimeout: 50000,
-  retries: { runMode: 1 },
-  env: { baseUrl: `https://serverest.dev/` },
+  env: { baseUrl: "https://serverest.dev/" },
+
   e2e: {
-    setupNodeEvents(on) {
-      on('file:preprocessor', cucumber());
+    setupNodeEvents(on, config) {
+      on("file:preprocessor", cucumber());
+      require("cypress-mochawesome-reporter/plugin")(on);
     },
-    supportFile: 'cypress/support/e2e.js',
-    baseUrl: `https://serverest.dev/`,
-    specPattern: ['cypress/features/**/*.feature'],
+    specPattern: "cypress/features/**/*.feature",
   },
 });
