@@ -1,0 +1,102 @@
+name: CI - Node + Cypress
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+permissions:
+  contents: read
+
+# Evita pipelines duplicados no mesmo branch/PR
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Unit tests (com cobertura)
+        run: npm test --if-present -- --coverage
+
+      - name: Upload coverage
+        if: success() && hashFiles('coverage/**') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage
+
+  e2e-cypress:
+    needs: unit-and-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      # Se seus testes E2E só chamam API (sem app local), pode remover build/start abaixo
+      - name: Build app (opcional)
+        run: npm run build --if-present
+
+      - name: Testes E2E Cypress (JUnit, sem vídeos/prints)
+        uses: cypress-io/github-action@v6
+        with:
+          # Inicie sua app se precisar (ajuste porta/URL)
+          start: npm run start --if-present
+          wait-on: 'http://localhost:3000' # ajuste ou remova se não tiver app
+          # Apenas cypress run - sem "npm run report"
+          command: >
+            npx cypress run
+            --browser chrome
+            --reporter junit
+            --reporter-options "mochaFile=cypress/results/results-[hash].xml,toConsole=true"
+        env:
+          # Desativar vídeos e screenshots (pode ativar quando quiser)
+          CYPRESS_video: "false"
+          CYPRESS_screenshotOnRunFailure: "false"
+          # Se usa variáveis de ambiente do Cypress:
+          # CYPRESS_baseUrl: "http://localhost:3000"
+
+      - name: Publicar JUnit (Cypress)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-junit
+          path: cypress/results/*.xml
+          if-no-files-found: ignore
+
+      - name: Publicar artefatos do Cypress
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-artifacts
+          path: |
+            cypress/screenshots
+            cypress/videos
+          if-no-files-found: ignore
+
+  
