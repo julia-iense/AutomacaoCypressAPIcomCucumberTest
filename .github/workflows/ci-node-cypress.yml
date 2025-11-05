@@ -1,4 +1,4 @@
-name: CI - Node + Cypress (mínimo)
+name: CI - Automação Cypress API com Cucumber Test
 
 on:
   push:
