@@ -1,7 +1,5 @@
 const { defineConfig } = require('cypress');
 const cucumber = require('cypress-cucumber-preprocessor').default;
-const pg = require('pg');
-const fs = require('fs');
 
 module.exports = defineConfig({
   modifyObstructiveCode: true,
@@ -15,23 +13,8 @@ module.exports = defineConfig({
   retries: { runMode: 1 },
   env: { baseUrl: `https://serverest.dev/` },
   e2e: {
-    setupNodeEvents(on, config) {
-      if (config.isTextTerminal) console.log('Running in terminal mode!');
-      on('before:run', () => console.log("Cypress Started"));
-      on('before:spec', (spec) => console.log("Running... " + spec.fileName));
-      on('task', {
-        dbQuery({ dbConfig, query }) {
-          const client = new pg.Pool(dbConfig);
-          return client.query(query);
-        },
-        print(s) {
-          console.log(s);
-          return null;
-        },
-      });
+    setupNodeEvents(on) {
       on('file:preprocessor', cucumber());
-      config.accessToken = process.env.accessToken;
-      return config;
     },
     supportFile: 'cypress/support/e2e.js',
     baseUrl: `https://serverest.dev/`,

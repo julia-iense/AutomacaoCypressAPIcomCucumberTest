@@ -2,7 +2,6 @@
 O projeto exemplo de automação de API com cypress+cucumber.
 A aplicação utilizada nesse projeto é para estudo e pode ter mais cenários, https://serverest.dev/.
 
-
 ## Tecnologias Utilizadas
 **Cypress**: Framework de testes end-to-end, com suporte para testes de API e UI.
 **Cucumber**: Framework para escrever testes de comportamento de maneira legível usando Gherkin.
