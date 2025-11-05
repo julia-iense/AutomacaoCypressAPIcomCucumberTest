@@ -4,8 +4,11 @@ A aplicação utilizada nesse projeto é para estudo e pode ter mais cenários, 
 
 ## Tecnologias Utilizadas
 **Cypress**: Framework de testes end-to-end, com suporte para testes de API e UI.
+
 **Cucumber**: Framework para escrever testes de comportamento de maneira legível usando Gherkin.
+
 **Gherkin**: Linguagem de especificação legível por humanos para descrever os testes em termos de comportamento.
+
 **JavaScript**: Linguagem de programação utilizada para escrever os testes.
 
 ## Pré-Requisitos
